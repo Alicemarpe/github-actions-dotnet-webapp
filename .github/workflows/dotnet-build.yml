@@ -3,33 +3,28 @@ name: Build .NET Project
 on:
   push:
     branches:
-      - "**"  # Todas as branches
+      - "**"
   schedule:
-    - cron: "0 * * * *"  # Executa a cada hora (no minuto 0)
+    - cron: "0 * * * *"
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      # Ação pré-existente: faz o checkout do código
       - name: Checkout do código
         uses: actions/checkout@v4
 
-      # Ação pré-existente: configura o ambiente .NET
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '8.0.x'  # ou a versão que você estiver usando
+          dotnet-version: '8.0.x'
 
-      # Script personalizado: restaura as dependências
       - name: Restaurar dependências
-        run: dotnet restore
+        run: dotnet restore src/github4women/github4women.csproj
 
-      # Script personalizado: compila a aplicação
       - name: Compilar o projeto
-        run: dotnet build --configuration Release --no-restore
+        run: dotnet build src/github4women/github4women.csproj --configuration Release --no-restore
 
-      # Script personalizado: executa os testes (se houver)
       - name: Executar testes
-        run: dotnet test --no-build --verbosity normal
+        run: dotnet test src/github4women/MeuPrgithub4womenojeto.csproj --no-build --verbosity normal
